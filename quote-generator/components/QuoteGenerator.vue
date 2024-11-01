@@ -6,6 +6,8 @@
       <p class="quote-author">- {{ quote.author }}</p>
       <button @click="fetchQuote" class="new-quote-btn">New Quote</button>
       <button @click="copyToClipboard">Copy Quote</button>
+      <br />
+      <button @click="shareOnFacebook">Share to Facebook</button>
     </div>
   </div>
 </template>
@@ -37,6 +39,20 @@ async function fetchQuote() {
 }
 
 onMounted(fetchQuote);
+
+function copyToClipboard() {
+  navigator.clipboard.writeText(`"${quote.value.text}" - ${quote.value.author}`);
+  window.alert('Quote copied');
+}
+
+function shareOnFacebook() {
+  const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+    window.location.href
+  )}&quote=${encodeURIComponent(`"${quote.value.text}" - ${quote.value.author}`)}`;
+  window.open(fbShareUrl, '_blank');
+
+}
+
 </script>
 
 <style>
